@@ -2,7 +2,6 @@
 <html lang="vi"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Bộ Lạc Gà · iOS</title>
-<script>(function(){var u=navigator.userAgent,isIOS=/iPhone|iPad|iPod/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1);if(!isIOS)location.replace("../")})()</script>
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,8 +21,15 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:radial-gradie
 .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:min(320px,100%);min-height:58px;border-radius:16px;text-decoration:none;font:800 18px/1.2 'Be Vietnam Pro',system-ui,sans-serif;color:#2a1300;background:linear-gradient(180deg,#ffb347,#e9780f);box-shadow:0 8px 22px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.35);transition:transform .15s,filter .15s}
 .btn:active{transform:scale(.98);filter:brightness(1.05)}
 .hint{max-width:300px;font-size:12.5px;line-height:1.55;color:var(--muted);text-shadow:0 1px 6px rgba(0,0,0,.7)}
-.note{max-width:320px;font-size:13.5px;font-weight:600;line-height:1.5;padding:9px 14px;border-radius:12px;background:rgba(20,10,2,.6);border:1px solid rgba(242,138,26,.5);color:var(--ink)}
-.note b,.hint b{color:var(--gold-light);font-weight:700}
+.note{max-width:320px;font-size:13.5px;font-weight:600;line-height:1.5;padding:9px 14px;border-radius:12px;background:rgba(20,10,2,.6);color:var(--ink)}
+.safari{max-width:320px;font-size:14px;line-height:1.55;padding:14px 16px;border-radius:12px;background:rgba(20,10,2,.62);color:var(--ink)}
+.safari b{color:var(--gold-light)}
+.safari .row{display:flex;gap:8px;margin-top:10px}
+.safari input{flex:1;min-width:0;padding:9px 10px;border-radius:8px;border:0;background:rgba(255,255,255,.1);color:var(--ink);font:600 13px 'Be Vietnam Pro',system-ui,sans-serif}
+.safari button{padding:9px 12px;border-radius:8px;border:0;background:#ff9a2e;color:#2a1300;font:800 13px 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer}
+#qr{display:flex;justify-content:center;margin-top:12px}
+#qr img,#qr canvas{background:#fff;padding:8px;border-radius:8px}
+[hidden]{display:none!important}.note b,.hint b{color:var(--gold-light);font-weight:700}
 </style></head><body>
 <main class="page">
 <img class="logo" src="logo.png" alt="Bộ Lạc Gà" width="469" height="299">
@@ -31,8 +37,33 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:radial-gradie
 <a class="btn" href="itms-services://?action=download-manifest&amp;url=https://bolacga.github.io/ios/manifest.plist">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11"/></svg>
 Cài đặt</a>
-<p class="note">⚠ Bản cũ tải từ <b>TestFlight</b> anh em vẫn giữ, <b>đừng xoá</b>.</p>
+<div class="safari" id="sf" hidden>
+<div id="sfMsg">Vui lòng mở trang này bằng <b>Safari</b> trên iPhone để cài đặt.</div>
+<div class="row"><input id="sfUrl" readonly value="https://bolacga.github.io/ios/"><button type="button" id="sfCopy">Sao chép</button></div>
+<div id="qr" hidden></div>
+</div><p class="note">⚠ Bản cũ tải từ <b>TestFlight</b> anh em vẫn giữ, <b>đừng xoá</b>.</p>
 <p class="hint">Lần đầu mở: <b>Cài đặt › Cài đặt chung › VPN và quản lý thiết bị › Tin cậy</b></p>
 </main>
 <script>fetch('version.txt?'+Date.now()).then(r=>r.ok?r.text():'').then(t=>{t=t.trim();if(t)document.getElementById('v').textContent='v'+t})</script>
-</body></html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function(){
+  var u=navigator.userAgent,
+      isIOS=/iPhone|iPad|iPod/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1),
+      alt=/CriOS|FxiOS|EdgiOS|OPiOS|OPT\/|YaBrowser|DuckDuckGo|GSA\//.test(u);
+  if(isIOS&&!alt)return; // Safari / Zalo / app khac dung WebView cua iOS -> cai duoc
+  document.querySelector('.btn').hidden=true;
+  document.getElementById('sf').hidden=false;
+  if(!isIOS){
+    document.getElementById('sfMsg').innerHTML='Mở trang này bằng <b>Safari</b> trên iPhone, hoặc quét mã bằng camera iPhone.';
+    var q=document.getElementById('qr');q.hidden=false;
+    try{new QRCode(q,{text:'https://bolacga.github.io/ios/',width:150,height:150})}catch(e){q.hidden=true}
+  }
+  var b=document.getElementById('sfCopy'),i=document.getElementById('sfUrl');
+  b.onclick=function(){
+    var done=function(){b.textContent='Đã chép';setTimeout(function(){b.textContent='Sao chép'},1500)};
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(i.value).then(done,function(){i.select();document.execCommand('copy');done()});
+    else{i.select();document.execCommand('copy');done()}
+  };
+})();
+</script></body></html>
