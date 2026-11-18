@@ -114,22 +114,13 @@
     .dl a:hover { transform: translateY(-2px); filter: brightness(1.08); }
     .dl a:active { transform: scale(.97); }
     .dl img { height: 64px; width: auto; }
-    @media (max-width: 560px) { .dl { flex-direction: column; align-items: center; gap: 10px; } .dl img { height: 62px; } }    .fb { width: min(500px, 100%); margin-top: 6px; border-radius: 10px; overflow: hidden; background: #fff; line-height: 0; }
-    .fb iframe { width: 100%; height: 130px; border: 0; display: block; }
-    .fb-name { display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; text-shadow: 0 1px 6px rgba(0,0,0,.7); }
-    .fb-name:hover { color: var(--gold-light); }    .feed { width: min(500px, 100%); margin-top: 6px; border-radius: 10px; background: rgba(18, 9, 2, .72); text-align: left; overflow: hidden; }
-    .feed .hd { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
-    .feed .hd img { width: 40px; height: 40px; border-radius: 50%; }
-    .feed .hd a.nm { color: var(--ink); font-weight: 800; font-size: 15px; text-decoration: none; }
-    .feed .hd a.nm:hover { color: var(--gold-light); }
-    .feed .hd small { display: block; color: var(--muted); font-size: 12px; }
-    .feed .hd .fl { margin-left: auto; padding: 7px 12px; border-radius: 6px; background: #1877f2; color: #fff; font-weight: 700; font-size: 13px; text-decoration: none; }
-    .feed .hd .fl:hover { background: #166fe0; }
-    .feed .ps a { display: flex; gap: 12px; padding: 10px 14px; border-top: 1px solid rgba(255,255,255,.06); color: var(--ink); text-decoration: none; }
-    .feed .ps a:hover { background: rgba(255,255,255,.04); }
-    .feed .ps img { width: 76px; height: 76px; border-radius: 6px; object-fit: cover; flex-shrink: 0; background: rgba(255,255,255,.06); }
-    .feed .ps p { font-size: 13.5px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-    .feed .ps time { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); }    .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-size: 13px; }
+    @media (max-width: 560px) { .dl { flex-direction: column; align-items: center; gap: 10px; } .dl img { height: 62px; } }    .fbcard { display: flex; align-items: center; gap: 12px; width: min(380px, 100%); margin-top: 4px; padding: 10px 12px; border-radius: 10px; background: rgba(18, 9, 2, .66); text-align: left; }
+    .fbcard img { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
+    .fbcard .nm { color: var(--ink); font-weight: 800; font-size: 15px; text-decoration: none; }
+    .fbcard .nm:hover { color: var(--gold-light); }
+    .fbcard small { display: block; color: var(--muted); font-size: 12px; }
+    .fbcard .fl { margin-left: auto; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 6px; background: #1877f2; color: #fff; font-weight: 700; font-size: 13px; text-decoration: none; white-space: nowrap; }
+    .fbcard .fl:hover { background: #166fe0; }    .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-size: 13px; }
     .links a { color: var(--muted); text-decoration: none; font-weight: 600; text-shadow: 0 1px 6px rgba(0,0,0,.7); }
     .links a:hover { color: var(--gold-light); }
     .modal { position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0,0,0,.55); }
@@ -165,11 +156,10 @@
       <a class="apk" href="https://github.com/gunvuive11-byte/launcher/releases/download/v3.0/BoLacGa.apk"><img src="img/btn-android.png" alt="Download for Android" width="449" height="140"></a>
     </nav>
 
-    <section class="feed" id="feed" hidden></section>
-    <div class="fb" id="fbBox">
-      <iframe title="BoLacGa trên Facebook" loading="lazy" scrolling="no" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbolacga1&tabs=&width=500&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"></iframe>
+    <div class="fbcard">
+      <a href="https://www.facebook.com/bolacga1" target="_blank" rel="noopener"><img src="https://graph.facebook.com/bolacga1/picture?type=large" alt="Bộ Lạc Gà" width="44" height="44" onerror="this.onerror=null;this.src='ios/icon.png'"></a>
+      <div><a class="nm" href="https://www.facebook.com/bolacga1" target="_blank" rel="noopener">Bộ Lạc Gà</a><small>Fanpage chính thức</small></div>
+      <a class="fl" href="https://www.facebook.com/bolacga1" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07"/></svg>Theo dõi</a>
     </div>
     <div class="links">
       <a href="https://facebook.com/bolacga1" target="_blank" rel="noopener">Facebook</a>
@@ -224,34 +214,5 @@
     });
   })();
   </script>
-  <script>
-  (function () {
-    var esc = function (s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-    var ago = function (t) {
-      var s = (Date.now() - new Date(t).getTime()) / 1000;
-      if (!(s >= 0)) return '';
-      if (s < 3600) return Math.max(1, Math.floor(s / 60)) + ' phút trước';
-      if (s < 86400) return Math.floor(s / 3600) + ' giờ trước';
-      if (s < 86400 * 7) return Math.floor(s / 86400) + ' ngày trước';
-      var d = new Date(t); return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
-    };
-    fetch('data/fb.json?' + Math.floor(Date.now() / 600000)).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
-      if (!j || !j.posts || !j.posts.length) return; // chua co du lieu -> giu khung Facebook nhung
-      var url = esc(j.url || 'https://www.facebook.com/bolacga1');
-      var hd = '<div class="hd">' + (j.avatar ? '<img src="' + esc(j.avatar) + '" alt="">' : '') +
-        '<div><a class="nm" href="' + url + '" target="_blank" rel="noopener">' + esc(j.name || 'Bộ Lạc Gà') + '</a>' +
-        (j.followers ? '<small>' + Number(j.followers).toLocaleString('vi-VN') + ' người theo dõi</small>' : '') + '</div>' +
-        '<a class="fl" href="' + url + '" target="_blank" rel="noopener">Theo dõi</a></div>';
-      var ps = j.posts.map(function (p) {
-        return '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">' +
-          (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" onerror="this.remove()">' : '') +
-          '<div><p>' + esc(p.text || 'Xem bài viết trên Facebook') + '</p><time>' + ago(p.time) + '</time></div></a>';
-      }).join('');
-      var box = document.getElementById('feed');
-      box.innerHTML = hd + '<div class="ps">' + ps + '</div>';
-      box.hidden = false;
-      document.getElementById('fbBox').hidden = true;
-    }).catch(function () {});
-  })();
-  </script></body>
+  </body>
 </html>
