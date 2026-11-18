@@ -117,7 +117,19 @@
     @media (max-width: 560px) { .dl { flex-direction: column; align-items: center; gap: 10px; } .dl img { height: 62px; } }    .fb { width: min(500px, 100%); margin-top: 6px; border-radius: 10px; overflow: hidden; background: #fff; line-height: 0; }
     .fb iframe { width: 100%; height: 130px; border: 0; display: block; }
     .fb-name { display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; text-shadow: 0 1px 6px rgba(0,0,0,.7); }
-    .fb-name:hover { color: var(--gold-light); }    .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-size: 13px; }
+    .fb-name:hover { color: var(--gold-light); }    .feed { width: min(500px, 100%); margin-top: 6px; border-radius: 10px; background: rgba(18, 9, 2, .72); text-align: left; overflow: hidden; }
+    .feed .hd { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
+    .feed .hd img { width: 40px; height: 40px; border-radius: 50%; }
+    .feed .hd a.nm { color: var(--ink); font-weight: 800; font-size: 15px; text-decoration: none; }
+    .feed .hd a.nm:hover { color: var(--gold-light); }
+    .feed .hd small { display: block; color: var(--muted); font-size: 12px; }
+    .feed .hd .fl { margin-left: auto; padding: 7px 12px; border-radius: 6px; background: #1877f2; color: #fff; font-weight: 700; font-size: 13px; text-decoration: none; }
+    .feed .hd .fl:hover { background: #166fe0; }
+    .feed .ps a { display: flex; gap: 12px; padding: 10px 14px; border-top: 1px solid rgba(255,255,255,.06); color: var(--ink); text-decoration: none; }
+    .feed .ps a:hover { background: rgba(255,255,255,.04); }
+    .feed .ps img { width: 76px; height: 76px; border-radius: 6px; object-fit: cover; flex-shrink: 0; background: rgba(255,255,255,.06); }
+    .feed .ps p { font-size: 13.5px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .feed .ps time { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); }    .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-size: 13px; }
     .links a { color: var(--muted); text-decoration: none; font-weight: 600; text-shadow: 0 1px 6px rgba(0,0,0,.7); }
     .links a:hover { color: var(--gold-light); }
     .modal { position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0,0,0,.55); }
@@ -153,7 +165,8 @@
       <a class="apk" href="https://github.com/gunvuive11-byte/launcher/releases/download/v3.0/BoLacGa.apk"><img src="img/btn-android.png" alt="Download for Android" width="449" height="140"></a>
     </nav>
 
-    <div class="fb">
+    <section class="feed" id="feed" hidden></section>
+    <div class="fb" id="fbBox">
       <iframe title="BoLacGa trên Facebook" loading="lazy" scrolling="no" allowfullscreen="true"
         allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
         src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbolacga1&tabs=&width=500&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"></iframe>
@@ -211,5 +224,34 @@
     });
   })();
   </script>
-</body>
+  <script>
+  (function () {
+    var esc = function (s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+    var ago = function (t) {
+      var s = (Date.now() - new Date(t).getTime()) / 1000;
+      if (!(s >= 0)) return '';
+      if (s < 3600) return Math.max(1, Math.floor(s / 60)) + ' phút trước';
+      if (s < 86400) return Math.floor(s / 3600) + ' giờ trước';
+      if (s < 86400 * 7) return Math.floor(s / 86400) + ' ngày trước';
+      var d = new Date(t); return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+    };
+    fetch('data/fb.json?' + Math.floor(Date.now() / 600000)).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      if (!j || !j.posts || !j.posts.length) return; // chua co du lieu -> giu khung Facebook nhung
+      var url = esc(j.url || 'https://www.facebook.com/bolacga1');
+      var hd = '<div class="hd">' + (j.avatar ? '<img src="' + esc(j.avatar) + '" alt="">' : '') +
+        '<div><a class="nm" href="' + url + '" target="_blank" rel="noopener">' + esc(j.name || 'Bộ Lạc Gà') + '</a>' +
+        (j.followers ? '<small>' + Number(j.followers).toLocaleString('vi-VN') + ' người theo dõi</small>' : '') + '</div>' +
+        '<a class="fl" href="' + url + '" target="_blank" rel="noopener">Theo dõi</a></div>';
+      var ps = j.posts.map(function (p) {
+        return '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">' +
+          (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" onerror="this.remove()">' : '') +
+          '<div><p>' + esc(p.text || 'Xem bài viết trên Facebook') + '</p><time>' + ago(p.time) + '</time></div></a>';
+      }).join('');
+      var box = document.getElementById('feed');
+      box.innerHTML = hd + '<div class="ps">' + ps + '</div>';
+      box.hidden = false;
+      document.getElementById('fbBox').hidden = true;
+    }).catch(function () {});
+  })();
+  </script></body>
 </html>
