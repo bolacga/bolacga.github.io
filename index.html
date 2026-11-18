@@ -114,8 +114,13 @@
     .dl a:hover { transform: translateY(-2px); filter: brightness(1.08); }
     .dl a:active { transform: scale(.97); }
     .dl img { height: 64px; width: auto; }
-    @media (max-width: 560px) { .dl { flex-direction: column; align-items: center; gap: 10px; } .dl img { height: 62px; } }    .fbcard { display: flex; align-items: center; gap: 12px; width: min(380px, 100%); margin-top: 4px; padding: 10px 12px; border-radius: 10px; background: rgba(18, 9, 2, .66); text-align: left; }
-    .fbcard img { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
+    @media (max-width: 560px) { .dl { flex-direction: column; align-items: center; gap: 10px; } .dl img { height: 62px; } }    .social { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; width: min(680px, 100%); margin-top: 4px; }
+    @media (max-width: 560px) { .social { grid-template-columns: 1fr; width: min(380px, 100%); } }
+    .fbcard { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 10px 12px; border-radius: 10px; background: rgba(18, 9, 2, .66); text-align: left; }
+    .fbcard img, .fbcard .ic { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
+    .fbcard .ic { display: flex; align-items: center; justify-content: center; background: #2aabee; color: #fff; }
+    .fbcard .fl.tg { background: #2aabee; }
+    .fbcard .fl.tg:hover { background: #229ed9; }
     .fbcard .nm { color: var(--ink); font-weight: 800; font-size: 15px; text-decoration: none; }
     .fbcard .nm:hover { color: var(--gold-light); }
     .fbcard small { display: block; color: var(--muted); font-size: 12px; }
@@ -156,16 +161,18 @@
       <a class="apk" href="https://github.com/gunvuive11-byte/launcher/releases/download/v3.0/BoLacGa.apk"><img src="img/btn-android.png" alt="Download for Android" width="449" height="140"></a>
     </nav>
 
+    <div class="social">
     <div class="fbcard">
       <a href="https://www.facebook.com/bolacga1" target="_blank" rel="noopener"><img src="https://graph.facebook.com/bolacga1/picture?type=large" alt="Bộ Lạc Gà" width="44" height="44" onerror="this.onerror=null;this.src='ios/icon.png'"></a>
       <div><a class="nm" href="https://www.facebook.com/bolacga1" target="_blank" rel="noopener">Bộ Lạc Gà</a><small>Fanpage chính thức</small></div>
       <a class="fl" href="https://www.facebook.com/bolacga1" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07"/></svg>Theo dõi</a>
     </div>
-    <div class="links">
-      <a href="https://facebook.com/bolacga1" target="_blank" rel="noopener">Facebook</a>
-      <a href="https://t.me/+LuXmsFYb55cNzE1" target="_blank" rel="noopener">Telegram</a>
-      <a href="https://dl2.ultraviewer.net/UltraViewer_setup_6.6.133_vi.exe" target="_blank" rel="noopener">Remote support</a>
-    </div>
+    <div class="fbcard">
+      <a class="ic" href="https://t.me/+LuXmsFYb55cNzE1" target="_blank" rel="noopener" aria-label="Telegram"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg></a>
+      <div><a class="nm" href="https://t.me/+LuXmsFYb55cNzE1" target="_blank" rel="noopener">Bộ Lạc Gà</a><small>Nhóm chat Telegram</small></div>
+      <a class="fl tg" href="https://t.me/+LuXmsFYb55cNzE1" target="_blank" rel="noopener">Tham gia</a>
+    </div>    </div>
+
   </main>
   <div class="modal" id="m" hidden>
     <div class="box">
