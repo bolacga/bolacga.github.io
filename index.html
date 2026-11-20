@@ -38,8 +38,8 @@
         "image": "https://bolacga.github.io/ios/logo.png",
         "description": "DDTank Old version 2.3 (2010), free to play on PC, Android and iOS. No VIP, no pay-to-win.",
         "genre": ["Artillery", "Turn-based strategy", "MMO"],
-        "gamePlatform": ["PC", "Windows", "Android", "iOS"],
-        "operatingSystem": "Windows, Android, iOS",
+        "gamePlatform": ["PC", "Windows", "macOS", "Android", "iOS"],
+        "operatingSystem": "Windows, macOS, Android, iOS",
         "applicationCategory": "Game",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
       }
@@ -128,6 +128,12 @@
     .fbcard .fl:hover { background: #166fe0; }    .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-size: 13px; }
     .links a { color: var(--muted); text-decoration: none; font-weight: 600; text-shadow: 0 1px 6px rgba(0,0,0,.7); }
     .links a:hover { color: var(--gold-light); }
+    .mac { font-size: 12.5px; color: var(--muted); text-shadow: 0 1px 6px rgba(0,0,0,.7); margin-top: -8px; }
+    .mac summary { display: inline; cursor: pointer; list-style: none; font-weight: 600; }
+    .mac summary::-webkit-details-marker { display: none; }
+    .mac summary:hover, .mac a { color: var(--gold-light); }
+    .mac ol { margin: 8px auto 0; padding: 10px 12px 10px 28px; max-width: 360px; text-align: left; line-height: 1.6; border-radius: 10px; background: rgba(18, 9, 2, .66); }
+    .mac b { color: var(--ink); }
     .modal { position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0,0,0,.55); }
     .modal.top { align-items: flex-start; padding-top: max(calc(env(safe-area-inset-top) + 16px), 14vh); }
     .box { position: relative; width: min(340px, 100%); padding: 22px 20px 18px; border-radius: 12px; background: #1e1409; color: var(--ink); text-align: center; font-size: 14px; line-height: 1.55; }
@@ -160,6 +166,16 @@
       <a class="ios" href="ios/"><img src="img/btn-iphone.png" alt="Install on iPhone" width="423" height="140"></a>
       <a class="apk" href="https://github.com/gunvuive11-byte/launcher/releases/download/v3.0/BoLacGa.apk"><img src="img/btn-android.png" alt="Download for Android" width="449" height="140"></a>
     </nav>
+
+    <details class="mac">
+      <summary>Also available on macOS &rsaquo;</summary>
+      <ol>
+        <li><a href="https://github.com/gunvuive11-byte/launcher/releases/download/v3.0/BoLacGa_Mac.zip">Download BoLacGa_Mac.zip</a> (2 GB, macOS 10.15+)</li>
+        <li>Open the zip, drag <b>Bo Lac Ga</b> into <b>Applications</b>.</li>
+        <li>First launch: right-click the app &rsaquo; <b>Open</b> &rsaquo; <b>Open</b>.<br>macOS 15+: open it once, then <b>System Settings &rsaquo; Privacy &amp; Security &rsaquo; Open Anyway</b>.</li>
+        <li>Apple M1&ndash;M4: click <b>Install</b> if macOS asks for Rosetta.</li>
+      </ol>
+    </details>
 
     <div class="social">
     <div class="fbcard">
