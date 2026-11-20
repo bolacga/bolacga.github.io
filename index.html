@@ -128,12 +128,6 @@
     .fbcard .fl:hover { background: #166fe0; }    .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-size: 13px; }
     .links a { color: var(--muted); text-decoration: none; font-weight: 600; text-shadow: 0 1px 6px rgba(0,0,0,.7); }
     .links a:hover { color: var(--gold-light); }
-    .mac { font-size: 12.5px; color: var(--muted); text-shadow: 0 1px 6px rgba(0,0,0,.7); margin-top: -8px; }
-    .mac summary { display: inline; cursor: pointer; list-style: none; font-weight: 600; }
-    .mac summary::-webkit-details-marker { display: none; }
-    .mac summary:hover, .mac a { color: var(--gold-light); }
-    .mac ol { margin: 8px auto 0; padding: 10px 12px 10px 28px; max-width: 360px; text-align: left; line-height: 1.6; border-radius: 10px; background: rgba(18, 9, 2, .66); }
-    .mac b { color: var(--ink); }
     .modal { position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0,0,0,.55); }
     .modal.top { align-items: flex-start; padding-top: max(calc(env(safe-area-inset-top) + 16px), 14vh); }
     .box { position: relative; width: min(340px, 100%); padding: 22px 20px 18px; border-radius: 12px; background: #1e1409; color: var(--ink); text-align: center; font-size: 14px; line-height: 1.55; }
@@ -153,7 +147,7 @@
 
     <section class="intro">
       <h1>BoLacGa · DDTank Old 2.3</h1>
-      <p>The original 2010 DDTank, rebuilt with smoother gameplay and essential upgrades. Play on PC, Android and iOS.</p>
+      <p>The original 2010 DDTank, rebuilt with smoother gameplay and essential upgrades. Play on PC, Mac, Android and iOS.</p>
       <div class="tags">
         <span>Free to play</span>
         <span>No VIP</span>
@@ -166,16 +160,6 @@
       <a class="ios" href="ios/"><img src="img/btn-iphone.png" alt="Install on iPhone" width="423" height="140"></a>
       <a class="apk" href="https://github.com/gunvuive11-byte/launcher/releases/download/v3.0/BoLacGa.apk"><img src="img/btn-android.png" alt="Download for Android" width="449" height="140"></a>
     </nav>
-
-    <details class="mac">
-      <summary>Also available on macOS &rsaquo;</summary>
-      <ol>
-        <li><a href="https://github.com/gunvuive11-byte/launcher/releases/download/v3.0/BoLacGa_Mac.zip">Download BoLacGa_Mac.zip</a> (2 GB, macOS 10.15+)</li>
-        <li>Open the zip, drag <b>Bo Lac Ga</b> into <b>Applications</b>.</li>
-        <li>First launch: right-click the app &rsaquo; <b>Open</b> &rsaquo; <b>Open</b>.<br>macOS 15+: open it once, then <b>System Settings &rsaquo; Privacy &amp; Security &rsaquo; Open Anyway</b>.</li>
-        <li>Apple M1&ndash;M4: click <b>Install</b> if macOS asks for Rosetta.</li>
-      </ol>
-    </details>
 
     <div class="social">
     <div class="fbcard">
@@ -198,6 +182,14 @@
         <p>Đang cài <b>BoLacGa</b> — ra màn hình chính chờ icon tải xong (nên dùng Wi-Fi).</p>
         <p>Lần đầu mở: <b>Cài đặt › Cài đặt chung › VPN và quản lý thiết bị › Tin cậy</b></p>
       </div>
+      <div id="mMac" hidden>
+        <p class="warn">Đang tải <b>BoLacGa_Mac.zip</b> (2 GB)…</p>
+        <p>1. Mở file zip, kéo <b>Bo Lac Ga</b> vào <b>Applications</b>.</p>
+        <p>2. Lần đầu mở: chuột phải vào app › <b>Open</b> › <b>Open</b>.<br>macOS 15 trở lên: mở thử 1 lần rồi vào <b>System Settings › Privacy &amp; Security › Open Anyway</b>.</p>
+        <p>3. Máy chip M1–M4: bấm <b>Install</b> nếu được hỏi cài Rosetta.</p>
+        <p>Tải không chạy? <a id="mMacUrl" style="color:var(--gold-light)">Bấm vào đây</a>.</p>
+        <p style="font-size:12px;opacity:.75">Cài lên iPhone: mở trang này bằng Safari trên iPhone.</p>
+      </div>
       <div id="mSf" hidden>
         <p id="mSfMsg">Vui lòng mở trang này bằng <b>Safari</b> trên iPhone để cài đặt.</p>
         <div class="row"><input id="mUrl" readonly value="https://bolacga.github.io/"><button type="button" class="cp" id="mCp">Sao chép</button></div>
@@ -210,9 +202,17 @@
     var IOS_URL = 'itms-services://?action=download-manifest&url=https://bolacga.github.io/ios/manifest.plist';
     var u = navigator.userAgent,
         isIOS = /iPhone|iPad|iPod/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1),
+        isMac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1),
+        MAC_URL = 'https://github.com/gunvuive11-byte/launcher/releases/download/v3.0/BoLacGa_Mac.zip',
         alt = /CriOS|FxiOS|EdgiOS|OPiOS|OPT\/|YaBrowser|DuckDuckGo|GSA\//.test(u);
     var m = document.getElementById('m'), $ = function (id) { return document.getElementById(id); };
-    function show(ok) { $('mOk').hidden = !ok; $('mSf').hidden = ok; m.classList.toggle('top', ok); m.hidden = false; }
+    function show(ok, mac) { $('mOk').hidden = !ok || mac; $('mMac').hidden = !mac; $('mSf').hidden = ok || mac; m.classList.toggle('top', ok && !mac); m.hidden = false; }
+    var iosBtn = document.querySelector('.dl a.ios');
+    if (isMac) { // máy Mac: nút Apple thành 'Download for Mac'
+      iosBtn.href = MAC_URL;
+      var im = iosBtn.querySelector('img'); im.src = 'img/btn-mac.png'; im.alt = 'Download for Mac';
+      $('mMacUrl').href = MAC_URL;
+    }
     $('mx').onclick = function () { m.hidden = true; };
     m.onclick = function (e) { if (e.target === m) m.hidden = true; };
     $('mCp').onclick = function () {
@@ -220,8 +220,9 @@
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(i.value).then(done, function () { i.select(); document.execCommand('copy'); done(); });
       else { i.select(); document.execCommand('copy'); done(); }
     };
-    document.querySelector('.dl a.ios').addEventListener('click', function (e) {
+    iosBtn.addEventListener('click', function (e) {
       e.preventDefault();
+      if (isMac) { location.href = MAC_URL; show(false, true); return; }
       if (isIOS && !alt) { location.href = IOS_URL; show(true); return; }
       show(false);
       if (!isIOS) {
