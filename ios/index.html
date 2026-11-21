@@ -46,8 +46,10 @@ Cài đặt</a>
 </main>
 <script>fetch('version.txt?'+Date.now()).then(r=>r.ok?r.text():'').then(t=>{t=t.trim();if(t)document.getElementById('v').textContent='v'+t})</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="../ios-mode.js"></script>
 <script>
 (function(){
+  if(window.IOS_MODE==='sideload'){location.replace('../#sideload');return;} // het chung chi -> ve trang chinh, hien huong dan Sideloadly
   var u=navigator.userAgent,
       isIOS=/iPhone|iPad|iPod/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1),
       alt=/CriOS|FxiOS|EdgiOS|OPiOS|OPT\/|YaBrowser|DuckDuckGo|GSA\//.test(u);

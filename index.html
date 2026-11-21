@@ -190,6 +190,16 @@
         <p>Tải không chạy? <a id="mMacUrl" style="color:var(--gold-light)">Bấm vào đây</a>.</p>
         <p style="font-size:12px;opacity:.75">Cài lên iPhone: mở trang này bằng Safari trên iPhone.</p>
       </div>
+      <div id="mSl" hidden>
+        <p class="warn">Đang mở trang tải <b>BoLacGa.ipa</b> (Google Drive)…</p>
+        <p>Cài lên iPhone bằng <b>Sideloadly</b> trên máy tính:</p>
+        <p>1. Tải file <b>.ipa</b> về máy tính (Drive báo không quét virus được → bấm <b>Vẫn tải xuống</b>).</p>
+        <p>2. Cài <a href="https://sideloadly.io" target="_blank" rel="noopener" style="color:var(--gold-light)">Sideloadly</a> (Windows cần thêm iTunes + iCloud bản web của Apple).</p>
+        <p>3. Cắm iPhone vào máy, kéo file .ipa vào Sideloadly, nhập Apple ID › <b>Start</b>.</p>
+        <p>4. Trên iPhone: <b>Cài đặt › Cài đặt chung › VPN và quản lý thiết bị › Tin cậy</b>. iOS 16+: bật <b>Quyền riêng tư &amp; Bảo mật › Chế độ nhà phát triển</b>.</p>
+        <p style="font-size:12px;opacity:.75">Apple ID miễn phí: app hết hạn sau 7 ngày, cài lại bằng Sideloadly để gia hạn.</p>
+        <p>Tải không chạy? <a id="mSlUrl" target="_blank" rel="noopener" style="color:var(--gold-light)">Bấm vào đây</a>.</p>
+      </div>
       <div id="mSf" hidden>
         <p id="mSfMsg">Vui lòng mở trang này bằng <b>Safari</b> trên iPhone để cài đặt.</p>
         <div class="row"><input id="mUrl" readonly value="https://bolacga.github.io/"><button type="button" class="cp" id="mCp">Sao chép</button></div>
@@ -197,8 +207,10 @@
       </div>
     </div>
   </div>
+  <script src="ios-mode.js"></script>
   <script>
   (function () {
+    var SIDELOAD = window.IOS_MODE === 'sideload'; // ios-mode.js lỗi/thiếu → coi như 'cert' (hành vi cũ)
     var IOS_URL = 'itms-services://?action=download-manifest&url=https://bolacga.github.io/ios/manifest.plist';
     var u = navigator.userAgent,
         isIOS = /iPhone|iPad|iPod/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1),
@@ -206,8 +218,14 @@
         MAC_URL = 'https://github.com/gunvuive11-byte/launcher/releases/download/v3.0/BoLacGa_Mac.zip',
         alt = /CriOS|FxiOS|EdgiOS|OPiOS|OPT\/|YaBrowser|DuckDuckGo|GSA\//.test(u);
     var m = document.getElementById('m'), $ = function (id) { return document.getElementById(id); };
-    function show(ok, mac) { $('mOk').hidden = !ok || mac; $('mMac').hidden = !mac; $('mSf').hidden = ok || mac; m.classList.toggle('top', ok && !mac); m.hidden = false; }
+    function show(ok, mac) { $('mSl').hidden = true; $('mOk').hidden = !ok || mac; $('mMac').hidden = !mac; $('mSf').hidden = ok || mac; m.classList.toggle('top', ok && !mac); m.hidden = false; }
+    function showSideload() { $('mOk').hidden = $('mMac').hidden = $('mSf').hidden = true; $('mSl').hidden = false; m.classList.remove('top'); m.hidden = false; }
     var iosBtn = document.querySelector('.dl a.ios');
+    if (SIDELOAD) {
+      $('mSlUrl').href = IOS_IPA_URL;
+      if (!isMac) { iosBtn.href = IOS_IPA_URL; iosBtn.target = '_blank'; iosBtn.rel = 'noopener'; }
+      if (location.hash === '#sideload') showSideload(); // /ios/ chuyển hướng về đây
+    }
     if (isMac) { // máy Mac: nút Apple thành 'Download for Mac'
       iosBtn.href = MAC_URL;
       var im = iosBtn.querySelector('img'); im.src = 'img/btn-mac.png'; im.alt = 'Download for Mac';
@@ -223,6 +241,7 @@
     iosBtn.addEventListener('click', function (e) {
       e.preventDefault();
       if (isMac) { location.href = MAC_URL; show(false, true); return; }
+      if (SIDELOAD) { window.open(IOS_IPA_URL, '_blank', 'noopener'); showSideload(); return; }
       if (isIOS && !alt) { location.href = IOS_URL; show(true); return; }
       show(false);
       if (!isIOS) {
